@@ -2,5 +2,5 @@ services:
   easynotes:
     build: .
     ports:
-      - "8000:5000"
+      - "5000:5000"
 
