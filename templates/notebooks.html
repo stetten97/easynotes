@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Notebooks</h1>
+    {% if notebooks|length < 1 %}
+    <h4 style="text-align: center">No Notebooks existing yet. Create one below:</h4>
+    {% else %}
+    <table>
+        <tr>
+            <th>Notebook</th>
+        </tr>
+        {% for notebook in notebooks %}
+        <tr>
+            <td>{{ notebook.name }}</td>
+            <td>
+                <a href="/update/{{notebook}}">Rename</a>
+                <a href="/delete/{{notebook}}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    {% endif %}
+    <div class="form">
+        <form action="/create_notebook" method="POST">
+            <input type="text" name="content" id="content">
+            <input type="submit" value="Create Notebook">
+        </form> 
+    </div>
+</div>    
+
+{% endblock %}
