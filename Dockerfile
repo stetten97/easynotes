@@ -5,6 +5,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y sqlite3
 
 COPY requirements.txt /app
+RUN pip3 install Flask-Migrate
 RUN pip3 install -r requirements.txt
 
 COPY . /app
