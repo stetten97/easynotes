@@ -5,10 +5,7 @@
     {% if notebooks|length < 1 %}
     <h4 style="text-align: center">No Notebooks existing yet. Create one below:</h4>
     {% else %}
-    <table>
-        <tr>
-            <th>Notebook</th>
-        </tr>
+    <table class="center">
         {% for notebook in notebooks %}
         <tr>
             <td>{{ notebook.name }}</td>
@@ -22,7 +19,7 @@
     </table>
     {% endif %}
     <div class="form">
-        <form action="/create_notebook" method="POST">
+        <form action="/create_notebook" method="POST" align="center">
             <input type="text" name="content" id="content">
             <input type="submit" value="Create Notebook">
         </form> 
