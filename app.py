@@ -1,12 +1,11 @@
 from flask import Flask
 from flask_migrate import Migrate
 from models import db
-from views.notes import bp
+from views.notebooks import notebooks
 
 app = Flask(__name__)
-app.register_blueprint(bp)
+app.register_blueprint(notebooks)
 
-# app.register_blueprint(bp)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///notes.db"
 
 migrate = Migrate(app, db)
@@ -17,4 +16,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
