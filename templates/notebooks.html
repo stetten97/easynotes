@@ -8,7 +8,9 @@
     <table class="center">
         {% for notebook in notebooks %}
         <tr>
-            <td>{{ notebook.name }}</td>
+            <td>
+                <a href="/go_to_notes/{{notebook.id}}">{{ notebook.name }}</a>
+            </td>
             <td>
                 <a href="/rename/{{notebook.id}}">Rename</a>
                 <a href="/delete/{{notebook.id}}">Delete</a>
@@ -19,8 +21,8 @@
     </table>
     {% endif %}
     <div class="form">
-        <form action="/create" method="POST" align="center">
-            <input type="text" name="content" id="content">
+        <form action="/create_notebook" method="POST" align="center">
+            <input type="text" name="notebook_name" id="notebook_name">
             <input type="submit" value="Create Notebook">
         </form> 
     </div>

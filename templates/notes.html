@@ -1,4 +1,22 @@
 {% extends 'base.html' %}
-{% block content %}
-<p>This should show user specific notes</p>
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center" href="/notes/{{notebook.id}}">{{notebook.name}}</h1>
+    {% if notes|length < 1 %}
+    <h4 style="text-align: center">Write the first note below</h4>
+    {% endif %}
+    <table class="center" align="center">
+        {% for note in notes %}
+        <tr>
+            <td>{{ note.content }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="form">
+        <form action="/create_note/{{notebook.id}}" method="POST" align="center">
+            <input type="text" name="note_content" id="note_content">
+            <input type="submit" value="Create Note">
+        </form>
+    </div>
+</div>
 {% endblock %}
