@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_migrate import Migrate
 from models import db
-from views.notebooks import notebooks
+from views.base import base_bp
 
 app = Flask(__name__)
-app.register_blueprint(notebooks)
+app.register_blueprint(base_bp)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///notes.db"
 
