@@ -1,12 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import Notebook, db
+from models import Notebook, Note, db
 import sys
 
 notebooks = Blueprint('notebooks', __name__)
-
-@notebooks.route('/home')
-def home():
-    return render_template('home.html')
 
 @notebooks.route('/go_to_notebooks')
 def move_to_notebooks():
@@ -17,11 +13,11 @@ def show_notebooks():
     notebooks = Notebook.query.all()
     return render_template('notebooks.html', notebooks=notebooks)
 
-@notebooks.route('/create', methods=['GET', 'POST'])
+@notebooks.route('/create_notebook', methods=['GET', 'POST'])
 def create_notebook():
     if request.method == 'POST':
-        content = request.form.get('content')
-        new_notebook = Notebook(name=content)
+        name = request.form.get('notebook_name')
+        new_notebook = Notebook(name=name)
         db.session.add(new_notebook)
         db.session.commit()
         return redirect('/notebooks')
@@ -29,6 +25,7 @@ def create_notebook():
 @notebooks.route('/delete/<int:id>', methods=['GET'])
 def delete_notebook(id):
     notebook_to_delete = Notebook.query.get_or_404(id)
+    db.session.query(Note).filter_by(notebook_id=notebook_to_delete.id).delete()
     db.session.delete(notebook_to_delete)
     db.session.commit()
     return redirect('/notebooks')
@@ -37,11 +34,10 @@ def delete_notebook(id):
 def rename_notebook(id):
     notebook_to_rename = Notebook.query.get_or_404(id)
     if request.method == 'POST':
-        notebook_to_rename.name = request.form.get('content')
+        new_name = request.form.get('notebook_name')
+        print(new_name, file=sys.stdout)
+        notebook_to_rename.name = new_name
         db.session.commit()
         return redirect('/notebooks')
     else:
-        return render_template("rename_notebook.html", notebook=notebook_to_rename)
-
-
-    
+        return render_template("rename_notebook.html", notebook=notebook_to_rename)   
