@@ -33,7 +33,6 @@ def delete_notebook(id):
 @notebooks.route('/rename/<int:id>', methods=['GET', 'POST'])
 def rename_notebook(id):
     notebook_to_rename = Notebook.query.get_or_404(id)
-    print(notebook_to_rename.name, file=sys.stdout)
     if request.method == 'POST':
         new_name = request.form.get('notebook_name')
         notebook_to_rename.name = new_name

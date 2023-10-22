@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="content">
+    <h1 style="text-align: center">Rename Notebook</h1>
+    <div class="form">
+        <form action="/edit_note/{{note.id}}" method="POST" align="center">
+            <input type="text" name="note_content" id="note_content" value="{{note.content}}">
+            <input type="submit" value="Submit">
+        </form> 
+    </div>
+</div>    
+{% endblock %}

@@ -24,8 +24,19 @@ def write_note(notebook_id):
     db.session.commit()
     return redirect(f'/notes/{notebook_id}')
 
-def delete_note():
-    pass
-
-def modify_note():
-    pass
+@notes.route('/delete_note/<int:id>', methods=['GET'])
+def delete_note(id):
+    note_to_delete = Note.query.get_or_404(id)
+    db.session.delete(note_to_delete)
+    db.session.commit()
+    return redirect(f'/notes/{note_to_delete.notebook_id}')
+    
+@notes.route('/edit_note/<int:id>', methods=['GET', 'POST'])
+def edit_note(id):
+    note_to_edit = Note.query.get_or_404(id)
+    if request.method == 'POST':
+        note_to_edit.content = request.form.get('note_content')
+        db.session.commit()
+        return redirect(f'/notes/{note_to_edit.notebook_id}')
+    else:
+        return render_template('edit_note.html', note=note_to_edit)
