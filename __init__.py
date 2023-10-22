@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
-from models import db
-from views.base import base_bp
+from easynotes.models.models import db
+from easynotes.views.base import base_bp
 
 app = Flask(__name__)
 app.register_blueprint(base_bp)
