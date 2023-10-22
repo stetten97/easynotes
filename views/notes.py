@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect
-from models import Notebook, Note, db
+from easynotes.models.models import Notebook, Note, db
 
 notes = Blueprint('notes', __name__)
 

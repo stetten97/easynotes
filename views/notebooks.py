@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import Notebook, Note, db
+from easynotes.models.models import Notebook, Note, db
 import sys
 
 notebooks = Blueprint('notebooks', __name__)
@@ -33,9 +33,9 @@ def delete_notebook(id):
 @notebooks.route('/rename/<int:id>', methods=['GET', 'POST'])
 def rename_notebook(id):
     notebook_to_rename = Notebook.query.get_or_404(id)
+    print(notebook_to_rename.name, file=sys.stdout)
     if request.method == 'POST':
         new_name = request.form.get('notebook_name')
-        print(new_name, file=sys.stdout)
         notebook_to_rename.name = new_name
         db.session.commit()
         return redirect('/notebooks')
