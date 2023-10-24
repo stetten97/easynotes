@@ -9,11 +9,13 @@
         {% for notebook in notebooks %}
         <tr>
             <td>
-                <a href="/go_to_notes/{{notebook.id}}">{{ notebook.name }}</a>
+                <a href="/go_to_notes/{{notebook.id}}" id="notebook">{{ notebook.name }}</a>
             </td>
             <td>
-                <a href="/rename/{{notebook.id}}">Rename</a>
-                <a href="/delete/{{notebook.id}}">Delete</a>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <button class="btn"><a class="fa fa-edit" href="rename/{{notebook.id}}" id="edit_button"></a></button>
+                <script>src="../static/js/edit_in_place.js"</script>
+                <button class="btn"><a class="fa fa-trash" href="/delete/{{notebook.id}}"></a></button>
             </td>
         </tr>
         {% endfor %}
