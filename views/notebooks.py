@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, jsonify
 from easynotes.models.models import Notebook, Note, db
 import sys
 
@@ -33,10 +33,9 @@ def delete_notebook(id):
 @notebooks.route('/rename/<int:id>', methods=['GET', 'POST'])
 def rename_notebook(id):
     notebook_to_rename = Notebook.query.get_or_404(id)
-    if request.method == 'POST':
-        new_name = request.form.get('notebook_name')
-        notebook_to_rename.name = new_name
+    new_notebook_name = request.json.get('notebook_name')
+
+    if new_notebook_name:
+        notebook_to_rename.name = new_notebook_name
         db.session.commit()
-        return redirect('/notebooks')
-    else:
-        return render_template("rename_notebook.html", notebook=notebook_to_rename)   
+        return jsonify({'message': 'notebookid Update Successfull!'})

@@ -5,22 +5,23 @@
     {% if notebooks|length < 1 %}
     <h4 style="text-align: center">No Notebooks existing yet. Create one below:</h4>
     {% else %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <table class="center">
         {% for notebook in notebooks %}
         <tr>
             <td>
-                <a href="/go_to_notes/{{notebook.id}}" id="notebook">{{ notebook.name }}</a>
+                <!-- <a href="/go_to_notes/{{notebook.id}}" id="notebook">{{ notebook.name }}</a> -->
+                <a href="/go_to_notes/{{notebook.id}}" class="notebook" data-notebookId="{{ notebook.id }}">{{ notebook.name }}</a>
             </td>
             <td>
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <button class="btn"><a class="fa fa-edit" href="rename/{{notebook.id}}" id="edit_button"></a></button>
-                <script>src="../static/js/edit_in_place.js"</script>
+                <button class="btn edit-button"><a class="fa fa-edit" href="#"></a></button>
                 <button class="btn"><a class="fa fa-trash" href="/delete/{{notebook.id}}"></a></button>
             </td>
         </tr>
         {% endfor %}
 
     </table>
+    <script src="../static/js/edit_in_place.js"></script>
     {% endif %}
     <div class="form">
         <form action="/create_notebook" method="POST" align="center">

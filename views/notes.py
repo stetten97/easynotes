@@ -31,7 +31,7 @@ def delete_note(id):
     db.session.commit()
     return redirect(f'/notes/{note_to_delete.notebook_id}')
     
-@notes.route('/edit_note/<int:id>', methods=['GET', 'POST'])
+@notes.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_note(id):
     note_to_edit = Note.query.get_or_404(id)
     new_content = request.json.get('note_content')
@@ -39,4 +39,4 @@ def edit_note(id):
     if new_content:
         note_to_edit.content = new_content
         db.session.commit()
-        return jsonify({'message': "Note Update Successfull!"})
+        return jsonify({'message': "noteid Update Successfull!"})
