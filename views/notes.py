@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, jsonify
 from easynotes.models.models import Notebook, Note, db
 
 notes = Blueprint('notes', __name__)
@@ -31,12 +31,12 @@ def delete_note(id):
     db.session.commit()
     return redirect(f'/notes/{note_to_delete.notebook_id}')
     
-@notes.route('/edit_note/<int:id>', methods=['GET', 'POST'])
+@notes.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit_note(id):
     note_to_edit = Note.query.get_or_404(id)
-    if request.method == 'POST':
-        note_to_edit.content = request.form.get('note_content')
+    new_content = request.json.get('note_content')
+
+    if new_content:
+        note_to_edit.content = new_content
         db.session.commit()
-        return redirect(f'/notes/{note_to_edit.notebook_id}')
-    else:
-        return render_template('edit_note.html', note=note_to_edit)
+        return jsonify({'message': "noteid Update Successfull!"})

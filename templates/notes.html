@@ -5,17 +5,20 @@
     {% if notes|length < 1 %}
     <h4 style="text-align: center">Write the first note below</h4>
     {% endif %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <table class="center" align="center">
         {% for note in notes %}
         <tr>
-            <td>{{ note.content }}</td>
+            <td class="note" data-noteId="{{ note.id }}">{{ note.content }}</td>
             <td>
-                <a href="/edit_note/{{note.id}}">Edit</a>
-                <a href="/delete_note/{{note.id}}">Delete</a>
+                <!-- <button class="btn"><a class="fa fa-edit" href="edit_note/{{note.id}}"></a></button> -->
+                <button class="btn edit-button"><a class="fa fa-edit" href="#"></a></button>
+                <button class="btn"><a class="fa fa-trash" href="/delete_note/{{note.id}}"></a></button>
             </td>
         </tr>
         {% endfor %}
     </table>
+    <script src="../static/js/edit_in_place.js"></script>
     <div class="form">
         <form action="/create_note/{{notebook.id}}" method="POST" align="center">
             <input type="text" name="note_content" id="note_content">
@@ -24,3 +27,4 @@
     </div>
 </div>
 {% endblock %}
+
