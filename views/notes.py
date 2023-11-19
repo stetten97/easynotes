@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, jsonify
+from flask import Blueprint, render_template, request, redirect, jsonify, flash
 from easynotes.models.models import Notebook, Note, db
 
 notes = Blueprint('notes', __name__)
@@ -19,10 +19,14 @@ def move_to_notes(id):
 @notes.route('/create_note/<int:notebook_id>', methods=['POST'])
 def write_note(notebook_id):
     content = request.form.get('note_content')
-    new_note = Note(title='Title', content=content, notebook_id=notebook_id)
-    db.session.add(new_note)
-    db.session.commit()
-    return redirect(f'/notes/{notebook_id}')
+    if content:
+        new_note = Note(title='Title', content=content, notebook_id=notebook_id)
+        db.session.add(new_note)
+        db.session.commit()
+        return redirect(f'/notes/{notebook_id}')
+    else:
+        flash('Empty Name is not allowed!')
+        return redirect(f'/notes/{notebook_id}')
 
 @notes.route('/delete_note/<int:id>', methods=['GET'])
 def delete_note(id):

@@ -29,6 +29,14 @@
             <input type="submit" value="Create Notebook">
         </form> 
     </div>
-</div>    
-
+</div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes" style="text-align: center">
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 {% endblock %}
