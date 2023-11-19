@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, jsonify
+from flask import Blueprint, render_template, request, redirect, jsonify, flash
 from easynotes.models.models import Notebook, Note, db
 import sys
 
@@ -17,10 +17,19 @@ def show_notebooks():
 def create_notebook():
     if request.method == 'POST':
         name = request.form.get('notebook_name')
-        new_notebook = Notebook(name=name)
-        db.session.add(new_notebook)
-        db.session.commit()
-        return redirect('/notebooks')
+        existing = Notebook.query.filter_by(name=name).first()
+        if name:
+            if existing:
+                flash('Name already exists!')
+                return redirect('/notebooks')
+            else:
+                new_notebook = Notebook(name=name)
+                db.session.add(new_notebook)
+                db.session.commit()
+                return redirect('/notebooks')
+        else:
+            flash('Empty Name is not allowed!')
+            return redirect('/notebooks')
     
 @notebooks.route('/delete/<int:id>', methods=['GET'])
 def delete_notebook(id):
